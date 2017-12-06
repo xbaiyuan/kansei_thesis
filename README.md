@@ -1,189 +1,125 @@
-# 住井・松田研究室のステキな TeX ファイルたち
+naist-thesis-tmpl
+===============================
 
-[東北大学 住井・松田研究室](http://www.sf.ecei.tohoku.ac.jp/)
-（工学部 電気情報物理工学科、大学院 情報科学研究科）
-で使うかもしれない便利な LaTeX ファイルを公開しています。
+NAIST情報科学研究科の日本語修士論文用LaTeXテンプレートです．
 
-- `paper/`: 論文のクラスファイルとサンプルファイル
-- `slide/`: プレゼンテーション用の beamer サンプルファイル
-- `poster/`: 学会ポスター用の beamer サンプルファイル
+(English version is [here](https://github.com/kmiya/naist-thesis-tmpl-en))
 
-ちなみに、文字コードは全て UTF-8 です。
-EUC-JP 派の人は `nkf --euc` などで文字コードを変換してから使いましょう。
+学生向けに大学が公開しているスタイルファイル(`naist-mthesis.sty`)は最終更新日が1998年とたいへん古いため，使用するとさまざまな不具合が生じます．そこで，`jsbook`をベースに，余白や文字の位置などは大学が提供しているスタイルファイルと一致するようにしたLaTeXテンプレートを作成しました．
 
-環境構築については [こちら](INSTALL.md) を参照して下さい。
+## 特徴
+- `sty`ファイルではなく`tex`ファイル群として提供しています．
+- 奥村晴彦氏が公開している`jsbook`をベースにしています．大学が提供しているスタイルファイルは`jarticle`をベースにしているため，フォントメトリックが適切でなかったりするためです．
+- `hyperref.sty`に対応しているので，生成したPDFの目次や文献番号にハイパーリンクが自動的に付与されます．
+- なるべく現代的なLaTeXファイルの書き方に従うようにしました．
 
-## スライドの書き方
+## 使い方
+`git`を使っているなら
 
-まず、次の一連のコマンドを実行して、`slide.pdf` が作れるか確認しましょう。
+    $ git clone git@github.com:kmiya/naist-thesis-tmpl.git
 
-    $ git clone https://github.com/akabe/sumiilab-tex
-    $ cd sumiilab-tex/slide/
-    $ make
+もしくは[このリンクからzipファイルをダウンロード](https://github.com/kmiya/naist-thesis-tmpl/archive/master.zip)し，展開してご利用ください．
 
-きっと、カレントディレクトリには slide.pdf というスライドの PDF ファイルが
-出来上がっていることでしょう。
+ファイルのフォーマットはすべてUTF-8なので，主にWindowsを使っている方はご注意ください．
 
-    $ ls
-    Makefile slide.pdf ...
+## よくありそうな質問
 
-PDF ファイルをちゃんと表示できれば成功です。
+#### 大学が提供しているスタイルファイルを使わないと修士論文が受理されないのでは？
 
-    $ evince slide.pdf &
+論文の体裁を規定に合わせれば問題ないようです．
 
-evince は Debian に標準でインストールされているドキュメント・ビューアで、
-tex ファイルを再コンパイルしたときに、勝手にリロードして、表示を更新してくれるので便利です。
-もしも、日本語が文字化けしたりして、うまく表示できないときは、純正の Adobe Reader を使いましょう。
+以下，大学が公開している「修士論文・課題研究の形式および電子ファイルの提出について」の「1.2 修士論文等の作成手順」より引用：
 
-    $ acroread slide.pdf &
+    B: LaTeX を使用するが，標準スタイルファイルは利用しない人
 
-もし、純正の Adobe Reader でも文字化けするようなら、フォントの設定がおかしいか、
-うまくインストールできなかった可能性があります。ググるか、詳しい人に聞いて直しましょう。
-（Adobe Reader は Adobe の公式 Web ページからダウンロードしてきた、.bin ファイルに
-`chmod a+x ***.bin` でパーミッションを与えた後、`./***.bin` でインストールできます。）
+    1. 修士論文等の最初の 4 ページは，2節の内容に従い，全体の体裁，印字の位置などが，
+       サンプルファイル mthesis.dvi または jmthesis.dvi に合致するように十分注意して作成する．
+    2. 本文は体裁を自由に決めて作成する．
 
-slide.tex を改造すれば、スライドが作れます。
-コンパイルは `make` でできます。
+このテンプレートは上記`mthesis.dvi`の「最初の4ページ」と一致するように調整してあります．
 
-※ 論文とは違って、スライドに関しては特定のフォーマットが決められているわけではありません。
-好きに改造してもらって結構です。
-（Power Point で作っても構いませんし、自信があるなら、スライドを使わずに、板書だけで説明しても OK です。）
+#### 目次に「目次」を入れたい
+`setting.tex`の以下の行を
 
-以下は良いスライド、良い発表のコツです。
-あくまで、学生が勝手にまとめただけの内容なので、あまり参考にならないかもしれません。
+```tex
+\usepackage[nottoc]{tocbibind}
+```
 
-- 発表するとき、発表者であるあなたは内容について熟知していますが、聞いている人にとっては初見の内容かもしれません。
-  専門用語はちゃんと説明しましょう。難しい用語や概念は直感的理解や具体例を述べた後に、
-  形式的な定義を話すと理解されやすいです。
-- スライドを作るときは、そのページで「何を説明したいか？」「どんなことを伝えたいか？」といった、
-  説明の目的・目標を意識すると良いです。
-  関係のない複数の内容を1つのページにまとめて書いたりすると、聞いてる人は混乱してしまいます。
-- 関係のない項目や種類の違う項目を1つの箇条書きの中に収めたり、意味もなく矢印を使ったりするのも、
-  聞き手を混乱させる原因になります。
-- 他人の論文を読んで、その内容について発表するときは、論文と全く同じ順序で説明をする必要はありません。
-  むしろ、解りやすくなるように、説明の順序を入れ替えたほうが、より良い発表になります。
-  普通、論文では論理の筋道が通るように、記号や関数、定理や補題は使う前に定義をしています。
-  しかし、口頭発表において同じ順序で説明すると、聞いている人は「その関数何に使うの？」といった疑問を持つことが多いです。
-  また、議論の大筋と関係のない記号等の定義が続くと、聞いている人は話の流れを見失ってしまいます。
-  発表するときは、議論の筋道が聴衆に伝わるように説明すると良いです。
-  （例えば、議論の大筋と重要な関係がないような記号の定義などは、必要になったら説明する、など。）
-- アイディアなどを説明するための具体例は、無闇に複雑なものだと、聴衆に内容が伝わらない可能性があります。
-  説明したい項目や概念を予め考えて（列挙して）おいて、それを最小限に含むような具体例を作ると良いです。
-- 幾つかの項目や概念を順番に説明したい時には、必要な情報を一気に見せるのではなく、
-  必要になった時に表示するほうが効果的です。最初から、全ての情報を見せると、
-  発表者が「今現在説明している内容」の理解に必要な情報と、
-  「これから（未来に）話す内容」の理解に必要な情報が混在してしまい、
-  聴衆はどこに注目して話を聞けば良いかわからなくなります。
-  アニメーション等を使ったり、スライドを分けるなどして、未来に必要になる情報を隠しておくと良いです。
-  （ただし、アニメーションといっても、非常に簡素なものに留めたほうが良いです。）
+以下のように変更してください（`[nottoc]`を消す）．
 
-## 論文の書き方
+```tex
+\usepackage{tocbibind}
+```
 
-次の一連のコマンドを実行します。
+これで目次に「目次」が追加されます．ただし，TeXのバージョンによっては目次のレイアウトが崩れる可能性がありますので，ご注意ください（Thanks [matcha-shake](https://github.com/matcha-shake)）．
 
-    $ git clone https://github.com/akabe/sumiilab-tex
-    $ cd sumiilab-tex/paper/
-    $ make
+### ディレクトリの構造
 
-きっと、カレントディレクトリには paper.pdf という論文の PDF ファイルが
-出来上がっていることでしょう。
-Adobe Reader (acroread) や evince で、ちゃんと表示できれば成功です。
+```
+.
+├── mthesis.pdf               # 見本のPDFファイル
+├── mthesis.tex               # メインのTeXファイル
+└── tex
+    ├── chap1.tex             # 第一章をここに書いてください
+    ├── chap2.tex             # 第二章をここに書いてください
+    ├── chap3.tex             # 第三章をここに書いてください
+    ├── class_setting         # このディレクトリ内のファイルは基本的に変更不要です
+    │   ├── eabstract.tex
+    │   ├── jabstract.tex
+    │   └── titlepage.tex
+    ├── cmember.tex           # 主査と副査の方の名前を書いてください
+    ├── con_ack.tex           # 結論と謝辞
+    ├── personal_setting.tex  # 学生番号などを書いてください
+    ├── reference.tex         # 参考文献
+    └── setting.tex           # お好きなLaTeXの設定を書いてください
+```
 
-paper.tex はクラスファイルの使用例を兼ねたテンプレートです。
-これを改造すれば論文が書けます。
-（論文クラスファイル自体の機能については [PAPER.md](PAPER.md) を参照して下さい。）
+#### `tex/personal_setting.tex`
 
-ぜひ、ステキな論文を書いて下さい。
+- 学籍番号
+- 修論の題名
+- 英語の題名
+- 著者名
+- 英語の著者名
+- 日本語の概要
+- 英語の概要
 
-## ポスターの書き方
+を書いてください．
 
-次の一連のコマンドを実行します。
+#### `tex/setting.tex`
 
-    $ git clone https://github.com/akabe/sumiilab-tex
-    $ cd sumiilab-tex/poster/
-    $ make
+お好きなLaTeXの設定を書いてください．またPDFのプロパティに題名や名前を埋め込む場合，ファイルの上方にある，
 
-きっと、カレントディレクトリには poster.pdf という論文の PDF ファイルが
-出来上がっていることでしょう。
-Adobe Reader (acroread) や evince で、ちゃんと表示できれば成功です。
+```tex
+pdftitle={  },%
+pdfauthor={  },%
+```
 
-poster.tex はクラスファイルの使用例を兼ねたテンプレートです。
-これを改造すればポスターが作れます。
-詳しい使い方は説明しませんが、
-https://github.com/akabe/ppl2016 などを参考にして下さい。
+に修論のタイトルと著者名をそれぞれ入力してください．
 
-ぜひ、ステキなポスターを作って下さい。
+#### `tex/chap1.tex`から`tex/chap3.tex`
 
-## その他
+章に対応．3章分しかないので足りなくなったら作ってください．作ったら`mthesis.tex`から読み込んでください．
 
-以下の補助資料は、必要なときに読むと良いかもしれません。
+#### `tex/class_setting/`
 
-- [参考文献の書き方](CITATION.md):
- スライド・論文における参考文献の書き方について書いてあります。
-- [EPS 画像の作り方](EPSIMAGES.md):
-  LaTeX の文章に画像を入れるときは、EPS 形式を扱うことが多いです。
-  普段あまり使わない画像形式なので、作り方を解説しておきます。
-- [Git を使った LaTeX ファイルの管理](GIT.md):
-  Git を使って LaTeX ファイルを管理する方法について書いてあります。
-  指導教員と論文の最新版を共有し、同時期に編集したい、という時に便利です。
-  投稿論文を書くときに必要になるかもしれません。
-- [フォントに関する Tips](FONTS.md)
-  ソースコード用のフォントの変更、日本語フォントの変更、日本語での太文字の使用、
-  多書体化などのフォントに関する小技を紹介しています。
-  LaTeX でフォント周りに手を加えるのは面倒なのであまりお勧めしませんが、
-  デフォルトではどうしても気に入らない場合に参考にして下さい。
+タイトルページと日英文の概要ページを作るためのLaTeXファイルが入っています．これらは基本的に変更する必要はありません．
 
-## 参考資料
+#### `OMakefile`と`OMakeroot`
 
-LaTeX の文書作成に有用な（と思われる）資料です。
+おまけです．`omake`を使っているなら
 
-- [Detexify](http://detexify.kirelabs.org/classify.html)
-  手書き文字から LaTeX の記号を探してくれるツールです。
-  記号の出し方がわからない時は、これを使って探しましょう。
-- [The Comprehensive LaTeX Symbol List (PDF)](http://www.tex.ac.uk/tex-archive/info/symbols/comprehensive/symbols-a4.pdf):
-  LaTeX の記号が大量にリストアップされている PDF ファイルです。
-- [日本語 LaTeX を使うときに注意するべきこと](http://www.math.tohoku.ac.jp/~kuroki/LaTeX/howtolatex.html):
-  数式の体裁を整える方法について細かく書いてあって良いです。
-- Beamer の使い方：一応、簡単な使い方は slide.tex に書いてありますが、
-  詳しく知りたい人は、以下の資料に目を通してみて下さい。
-  - [辻研究室 Beamer](http://neurodynamics.jp/etc/beamer):
-    Beamer の機能についての説明が分かりやすくまとまっています。
-    入門的な内容で、slide.tex と合わせて読むと理解が深まると思います。
-  - [Beamer User Guide (PDF)](http://texdoc.net/texmf-dist/doc/latex/beamer/doc/beameruserguide.pdf):
-    公式のドキュメントで、非常に詳細な情報が載っています。
-- ソースコードの書き方：listings.sty を使いましょう（verbatim は融通が利かなくて大変不便です）。
-  うまく設定すると専門書のような綺麗なソースコードが書けます。
-  簡単な使い方は slide.tex に載っていますが、細かく体裁を整えたい場合は、以下の資料を読んでみて下さい。
-  listings.sty は slide.tex でも paper.tex でもデフォルトで読み込まれるので、
-  自分で `usepackage` する必要はありません。
-  - [Listings - MyTeXpert](http://mytexpert.sourceforge.jp/index.php?Listings):
-    `lstset` による体裁の設定の具体例が沢山載っています。
-  - The Listings Package ( ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf ):
-    公式のドキュメントで、非常に詳細な情報が載っています。
-- アルゴリズム（擬似コード）の書き方：algorithmic.sty と algorithm.sty を使いましょう。
-  ググると比較的分かりやすい Web ページが多数ヒットします。
-  - [package for algorithms](http://www.cs.toronto.edu/~frank/Useful/algorithm2e.pdf):
-    公式のドキュメント。
-- 証明図や導出木の書き方：分数を書くための frac マクロで何とかするという手もありますが、
-  綺麗な証明図を書くためのスタイルファイルが幾つかあります。
-  好みの問題もあるので、どれが一番良いという事はないですが、
-  最初はドキュメントの多い bussproofs.sty が良いと思います（でも、bussproofs は独特のインタフェースをしています）。
-  - bussproofs.sty:
-    証明図や導出木則を書くためのスタイルファイルです。
-    どれくらいレイアウトの融通が利くのかよくわかりませんが、
-    TeX コードの見た目としては、証明図系のスタイルファイルの中で最もシンプルで分かりやすいと思います。
-    - [証明図は「bussproof.sty」にお任せ](http://kreisel.fam.cx/webmaster/clog/2011-05-05-1.html):
-      入門として良いと思われる Web ページ。マクロの使い方が簡潔にまとまっている。
-    - [LaTeX for Logicians, bussproofs.sty: A User Guide](http://get-software.net/macros/latex/contrib/bussproofs/BussGuide2.pdf):
-      公式ドキュメント。
-  - proofs.sty:
-    これも、証明図や導出木則を書くためのスタイルファイルです。
-    - [LaTeX for Logicians, proofs.sty: A User Guide](http://www.logicmatters.net/resources/ndexamples/proofsty.html):
-      簡単に使い方がまとまっています。
-    - [The proof package](http://ctan.mackichan.com/macros/latex/contrib/lkproof/lkproof-doc.pdf):
-      公式ドキュメント。
-  - bcprules.sty:
-    あの Benjamin C. Pierce 先生が作った、証明図や導出木則を書くためのスタイルファイルです。
-    公式のドキュメントが見当たらないのですが、使い方は難しくないようです。
-    - [推論規則をレイアウトする bcprules.sty](http://d.hatena.ne.jp/eagletmt/20120111/1326251578):
-      bcprules.sty の具体例が載っています。
+    $ omake -P --verbose
+
+などとすることでファイルの変更を検知して自動で再コンパイルしてくれます．
+
+## 参考リンク
+以下の資料は大変参考になるので，論文を指導教官や副査の方に提出する前には必ず目を通すことをお勧めします．
+
+- [SICE著者のためのLaTEXべからず集 (PDF)](http://www-ics.acs.i.kyoto-u.ac.jp/ics/HowToWriteTeXDocuments.pdf)
+- [数学の常識・非常識---由緒正しいTEX入力法 (PDF)](http://www.math.tohoku.ac.jp/tmj/oda_tex.pdf)
+- [使ってはいけないLaTeXのコマンド・パッケージ・作法](http://ichiro-maruta.blogspot.jp/2013/03/latex.html)
+- [Tips/TeX - Takatalab](http://www.info.kochi-tech.ac.jp/y-takata/index.php?Tips/TeX)
+
+### その他
+作者はLaTeXのエキスパートではないので，おかしなところがたくさんあると思います．Pull Requestはお気軽に．
