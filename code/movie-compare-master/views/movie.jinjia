@@ -1,0 +1,57 @@
+{% macro imdb_url(movie) -%}
+    {{ 'http://www.imdb.com/title/' + movie['movie_tt_id']}}
+{%- endmacro %}
+
+{% macro ratings_num(ratings_number) -%}
+    {% if show_ratings_num == True %}
+        {% if ratings_number/1000 >= 1 %}
+            {{ ratings_number//1000|int }} K
+        {% else %}
+            {{ ratings_number|int }}
+        {% endif %}
+    {% endif %}
+{%- endmacro %}
+
+{% macro to_percent(rating_float) -%}
+    {{ "{:.1%}".format(rating_float) }}
+{%- endmacro %}
+
+
+<div class='thumbnail movie-thumbnail'>
+    <a href='{{ imdb_url(movie) }}' target='_blank'>
+        <div class='caption movie-info'>
+            <img class="movie-poster" src={{movie['image_url']}}>
+            <span class='title' title="{{movie['name']}}">{{movie['name']}}</span>
+            <div>
+                <a class='btn-rating' href='{{movie['douban_url']}}' target='_blank'>
+                    <img class="site-icon" src='./assets/douban.ico'>
+                    {{movie['db_rating']}}
+                    {% if show_ratings_num == True %}
+                        {% if movie['db_rank'] is defined %}
+                        , {{ movie['db_rank']|int }}%
+                        {% endif %}
+                        ({{ratings_num(movie['db_ratings_count'])}})
+                    {% endif %}
+                </a>
+                {% if movie['std'] is defined  %}
+                    <span class="label label-primary" title="std">{{ movie['std']|round(2) }}</span>
+                    {% if movie['cluster'] is defined  %}
+                        <span class="label label-info" title="cluster">{{movie['cluster']}}</span>
+                    {% endif %}
+                {% endif %}
+                {% if movie['imdb_rating'] is defined %}
+                <a class='btn-rating' href='{{ imdb_url(movie) }}' target='_blank'>
+                    <img class="site-icon" src='./assets/imdb.ico'>
+                    {{movie['imdb_rating']}}
+                    {% if show_ratings_num == True %}
+                        {% if movie['imdb_rank'] is defined %}
+                        , {{ movie['imdb_rank']|int }}%
+                        {% endif %}
+                        ({{ratings_num(movie['imdb_ratings_count'])}})
+                    {% endif %}
+                {% endif %}
+                </a>
+            </div>
+        </div>
+    </a>
+</div>

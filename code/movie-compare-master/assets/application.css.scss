@@ -1,0 +1,147 @@
+.movie-thumbnail{
+  display: inline-block;
+  margin-right: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 4px;
+  .caption{
+    color: #000;
+    padding: 7px;
+  }
+  .title{
+    display: block;
+    font-size:18px;
+    font-weight: bold;
+    color: #000;
+    margin: 10px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .btn-rating{
+    margin-bottom: 5px;
+  }
+  .site-icon{
+    height: 16px;
+    display: inline-block;
+  }
+  img.movie-poster {
+    max-width: 135px;
+  }
+  *:link{
+    color: #333;
+    text-decoration: none;
+  }
+}
+
+.output_wrapper .btn-rating{
+  display: inline-block;
+  text-align: center;
+  border: 1px solid  #ccc;;
+  border-radius: 2px;
+  padding: 6px 12px;
+}
+
+.btn-rating{
+  display: block;
+}
+
+svg.mpld3-figure{
+  min-height: 1200px;
+}
+
+.output_html{
+  .movie-thumbnail{
+      width: 165px;
+  }
+}
+
+.mpld3-tooltip{
+  .movie-info{
+     width: 180px !important;
+     display: inline-block;
+     float: left;
+      .caption{
+        padding: 9px;
+      }
+      img.movie-poster {
+        max-width: 160px;
+      }
+  }
+  .movie-distribution-thumbnail{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    padding: 10px;
+      img.movie-poster {
+        width: 125px !important;
+      }
+  }
+}
+
+
+.movie-distribution-thumbnail{
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  .title{
+    display: block;
+    font-size:14px;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .movie-info{
+    display: inline-block;
+    width: 120px;
+  }
+  img.movie-poster {
+    width: 95px;
+    float: left;
+    margin-right: 10px !important;
+  }
+  .site-icon{
+    margin-top: -1px;
+    height: 16px;
+    display: inline-block;
+  }
+  .distribution{
+    margin-top: 10px;
+  }
+}
+
+.distribution{
+  .item{
+    font-size: 12px;
+    line-height: 14px;
+  }
+  .power {
+    height: 10px;
+    float: left;
+    margin-top: 1px;
+    margin-right: 4px;
+    background: #ffd596 none repeat scroll 0 0;
+  }
+  .rating_per{
+    color: #9b9b9b;
+    font-size: 11px;
+    line-height: 14px;
+  }
+}
+
+.custom-thumbnail{
+  display: inline-block;
+  margin-right: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 2px;
+  padding: 10px;
+}
+
+.right{
+  float: right;
+}
